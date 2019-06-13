@@ -30,11 +30,13 @@ function whoami(){
                 //alert(JSON.stringify(response));
                 var i = 0;
                 $.each(response, function(){
-                    f = '<div class="alert alert-secondary" role="alert" onclick=loadMessages('+currentUserId+','+response[i].id+') >';
+                if(currentUserId != response[i].id){
+                    f = '<a class="list-group-item list-group-item-action" onclick=limpiar();loadMessages('+currentUserId+','+response[i].id+') >';
                     f = f + response[i].username;
-                    f = f + '</div>';
-                    i = i+1;
+                    f = f + '</a>';
                     $('#allusers').append(f);
+                    }
+                    i = i+1;
                 });
             },
             error: function(response){
@@ -53,12 +55,28 @@ function whoami(){
             contentType: 'application/json',
             dataType:'json',
             success: function(response){
-                alert(JSON.stringify(response));
+                //alert(JSON.stringify(response));
+                var i = 0;
+                $.each(response, function(){
+                    if(currentUserId == response[i].user_from_id){
+                    f = '<div class="alert alert-primary" role="alert" id="message_'+i+'">';
+                    } else {
+                    f = '<div class="alert alert-secondary" role="alert" id="message_'+i+'">';
+                    }
+                    f = f + response[i].content;
+                    f = f + '</div>';
+                    $('#messages').append(f);
+                    i = i+1;
+                });
             },
             error: function(response){
                 alert(JSON.stringify(response));
             }
         });
+    }
+
+    function limpiar(){
+        document.getElementById('messages').innerHTML="";
     }
 
     function sendMessage(){
@@ -78,7 +96,9 @@ function whoami(){
             data : data,
             dataType:'json',
             success: function(response){
-                alert(JSON.stringify(response));
+                //alert(JSON.stringify(response));
+                limpiar();
+                loadMessages(currentUserId,currentClickedId);
             },
             error: function(response){
                 alert(JSON.stringify(response));

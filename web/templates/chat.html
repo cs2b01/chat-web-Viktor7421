@@ -2,9 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Chat</title>
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/static/js/libs/bootstrap.min.js" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="chat.js"></script>
@@ -12,27 +17,54 @@
 </head>
 <body onload="whoami()">
 
-<table width="100%" border="1px solid">
-    <tr>
-        <td width="25%">
-            <div  class="alert alert-primary" role="alert">
-                <label id="cu_username"></label>
-                <br/>
-                <label id="cu_name"></label>
-            </div>
-            <div id="allusers">
+<div class="d-flex" id="wrapper">
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading" id="cu_username"></div>
+        <div class="list-group list-group-flush" id="allusers"></div>
+    </div>
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle">Usuarios</button>
 
-            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        </td>
-        <td width="75%">
-            <div id="messages">Mensajes</div>
-                <input type="text" id="postmessage"/>
-                <input type="button" onclick="sendMessage()">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Acciones
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/static/index.html">Home</a>
+                            <a class="dropdown-item" href="/static/crud_users.html">Manager Users</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </td>
-    </tr>
-</table>
+        </nav>
+        <div id="messages"></div>
+        <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" id="postmessage" placeholder="message">
+            <input type="button" class="input-group-append btn btn-primary btn-user" value="send" onclick="sendMessage()">
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 
 </body>
 
